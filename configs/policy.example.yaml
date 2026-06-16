@@ -1,0 +1,19 @@
+# costfuse policy — copy this to policy.yaml and edit for your project.
+#
+# Resources matching these patterns are ALERT-ONLY. costfuse will never
+# auto-stop them, no matter what a rule says. Put production here.
+protected_resources:
+  - "prod-*"
+
+# Rules escalate by projected daily spend (USD). The highest threshold that
+# the projection exceeds wins.
+rules:
+  - name: warn
+    over_daily_usd: 100
+    action: notify
+  - name: throttle
+    over_daily_usd: 500
+    action: throttle
+  - name: trip
+    over_daily_usd: 1000
+    action: stop
